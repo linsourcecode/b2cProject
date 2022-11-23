@@ -34,6 +34,8 @@ public class UserController {
         return userService.check(userCheckParam);
 
     }
+    /** 注册账号
+     * */
     @ResponseBody
     @PostMapping("register")
     public R register(@RequestBody @Validated User user, BindingResult result){
@@ -45,6 +47,9 @@ public class UserController {
 
         return userService.register(user);
     }
+    /**
+     * 登录接口
+     * */
     @ResponseBody
     @PostMapping("login")
     public R login(@RequestBody @Validated UserLoginParam userLoginParam, BindingResult result){

@@ -63,13 +63,11 @@ public class UserServiceImpl implements UserService {
             return  R.fail("账号已存在");
         }
         /**
-         * 使用Md5加密，可以保证密码的前后一致性，可以使用穷举法破解
-         * 加强措施：
-         *   增加密码的复杂度
-         *   加盐
+         * 加盐，加大md5密码破解难度
          * */
         String encode = MD5Util.encode(user.getPassword() + UserConstants.USER_SLAT);
         user.setPassword(encode);
+        //检查数据是否插入成功
         int rows = userMapper.insert(user);
         if(rows==0){
             return R.fail("注册失败");
@@ -78,9 +76,14 @@ public class UserServiceImpl implements UserService {
 
         return R.ok("注册成功");
     }
+    /**
+     * 校验登录结果
+     *
+     * */
 
     @Override
     public R login(UserLoginParam userLoginParam) {
+        //用户提交密码进行加盐，使用md5重新加密，于数据库保存密码进行校验
         String encode = MD5Util.encode(userLoginParam.getPassword() + UserConstants.USER_SLAT);
         QueryWrapper queryWrapper=new QueryWrapper();
         queryWrapper.eq("user_name",userLoginParam.getUserName());
