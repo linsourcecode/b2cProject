@@ -1,0 +1,13 @@
+spring:
+  rabbitmq:
+    host: data101
+    port: 5672
+    virtual-host: /
+    username: lin
+    password: lin123abc
+    listener:
+      simple:
+        prefetch: 1   # 预先分配1个 能者多劳
+
+  profiles:
+    active: mq  # 激活配置
