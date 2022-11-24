@@ -2,10 +2,9 @@ package org.example.user.controller;
 
 
 import org.example.parms.AddressListParam;
+import org.example.parms.AddressParam;
 import org.example.parms.AddressRemoveParam;
-import org.example.pojo.Address;
 import org.example.user.service.AddressService;
-
 import org.example.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * 提供用户地址增删查接口
  * */
 @RestController
-@RequestMapping("user/Address")
+@RequestMapping("user/address")
 public class AddressController {
     @Autowired
     private AddressService addressService;
@@ -36,7 +35,7 @@ public class AddressController {
      * */
     @ResponseBody
     @PostMapping("save")
-    public R save(@RequestBody @Validated Address address, BindingResult bindingResult){
+    public R save(@RequestBody AddressParam address, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return  R.fail("参数异常,失败");
         }

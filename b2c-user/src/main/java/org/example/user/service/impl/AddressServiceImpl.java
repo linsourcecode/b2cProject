@@ -2,6 +2,7 @@ package org.example.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.example.parms.AddressParam;
 import org.example.pojo.Address;
 import org.example.user.mapper.AddressMapper;
 import org.example.user.service.AddressService;
@@ -36,15 +37,21 @@ public class AddressServiceImpl implements AddressService {
     /**提供用户地址保存服务
      * */
     @Override
-    public R save(Address address) {
-        log.info("详细信息为 "+address);
+    public R save(AddressParam addressParam) {
+
+        Address address = addressParam.getAdd();
+        address.setUserId(address.getUserId());
+
+        //1.数据库插入
         int rows = addressMapper.insert(address);
-        //2.插入成功
+
+        //2.返回结果处理
         if (rows == 0){
-            log.info("AddressServiceImpl.save业务结束，结果:{}","地址失败!");
-            return R.fail("插入地址失败!");
+            return R.fail("地址保存失败!");
         }
-        //复用查询业务
+
+        log.info("AddressServiceImpl.save业务结束，结果:{}",address);
+        //调用查询,返回全部数据!
         return list(address.getUserId());
     }
     /**
