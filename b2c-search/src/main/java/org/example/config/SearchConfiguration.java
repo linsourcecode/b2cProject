@@ -36,10 +36,10 @@ public class SearchConfiguration {
      * @return
      */
     @Bean
-    public RestHighLevelClient restHighLevelClient(){
+    public RestHighLevelClient restHighLevelClient() throws InterruptedException {
         HttpHost host=new HttpHost("data101", 9200, HttpHost.DEFAULT_SCHEME_NAME);
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("elastic", "lin123abc"));
+        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("elastic", "lin123abc"));;
         RestClientBuilder clientBuilder= RestClient.builder(host);
         clientBuilder.setHttpClientConfigCallback(f->f.setDefaultCredentialsProvider(credentialsProvider));
         RestHighLevelClient client =
